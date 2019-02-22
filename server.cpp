@@ -10,11 +10,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-using namespace std;
-/* portul folosit */
 #define PORT 4444
 
-/* codul de eroare returnat de anumite apeluri */
+using namespace std;
 extern int errno;
 char msg[100], msg2[100];
 struct infoPlayer {
@@ -27,7 +25,7 @@ char tabla[9][10];
 int latime = 7, lungime = 6, coloanaAleasa, win, full, again;
 
 
-extern int errno; /* eroarea returnata de unele apeluri */
+extern int errno; 
 
 char* conv_addr(struct sockaddr_in address)
 {
@@ -52,8 +50,8 @@ int randJucator(char tabla[][10], infoPlayer activ)
         char primit[100];
         if (read(activ.numar, primit, 100) <= 0) {
             perror("[server]Eroare la read() de la client.\n");
-            close(activ.numar); /* inchidem conexiunea cu clientul */
-            continue; /* continuam sa ascultam */
+            close(activ.numar); 
+            continue; 
         }
         coloanaAleasa = atoi(primit);
 
@@ -61,8 +59,8 @@ int randJucator(char tabla[][10], infoPlayer activ)
             write(activ.numar, "e", sizeof(msgeroare));
             if (read(activ.numar, primit, 100) <= 0) {
                 perror("[server]Eroare la read() de la client.\n");
-                close(activ.numar); /* inchidem conexiunea cu clientul */
-                continue; /* continuam sa ascultam */
+                close(activ.numar); 
+                continue; 
             }
             coloanaAleasa = atoi(primit);
         }
@@ -212,10 +210,10 @@ int restart(char tabla[][10], infoPlayer activ)
 
 int main()
 {
-    struct sockaddr_in server; // structura folosita de server
+    struct sockaddr_in server; 
     struct sockaddr_in from;
-    char msg[100]; //mesajul primit de la client
-    int sd; //descriptorul de socket
+    char msg[100]; 
+    int sd; 
 
     if ((sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("[server]Eroare la socket().\n");
@@ -273,11 +271,11 @@ int main()
             close(sd);
             if (write(player1, "P", 100) <= 0) {
                 perror("[server]Eroare la write() catre client.\n");
-                continue; /* continuam sa ascultam */
+                continue; 
             }
             if (write(player2, "D", 100) <= 0) {
                 perror("[server]Eroare la write() catre client.\n");
-                continue; /* continuam sa ascultam */
+                continue;
             }
                 printf("[server]Asteptam mesajul...\n");
                 fflush(stdout);
